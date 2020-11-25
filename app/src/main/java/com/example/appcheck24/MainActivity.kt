@@ -1,7 +1,6 @@
 package com.example.appcheck24
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -12,15 +11,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appcheck24.Network.ApiHelper
-import com.example.appcheck24.Network.Product
+import com.example.appcheck24.Network.ProductX
 import com.example.appcheck24.Network.RetrofitBuilder
 import com.example.appcheck24.Util.CustomDialogClass
 import com.example.appcheck24.Util.Status
 import com.example.appcheck24.ViewModel.MainViewModel
 import com.example.appcheck24.ViewModel.ViewModelFactory
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import org.json.JSONArray
 
 
 class MainActivity : AppCompatActivity() {
@@ -96,9 +92,6 @@ class MainActivity : AppCompatActivity() {
                     Status.SUCCESS -> {
                         recyclerView?.visibility = View.VISIBLE
                         progressBar?.visibility = View.GONE
-                        var gson = Gson()
-                        val weatherList: List<Product> = gson.fromJson(stringReader , Array<Product>::class.java).toList()
-                        val jsonArray = JSONArray(jsonObj)
                         resource.data?.let { products -> retrieveList(products) }
                     }
                     Status.ERROR -> {
@@ -115,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveList(products: List<Product>) {
+    private fun retrieveList(products: ProductX) {
         adapter.apply {
             addProducts(products)
             notifyDataSetChanged()
